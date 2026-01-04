@@ -57,7 +57,7 @@ data = projections_df.merge(reports_df, on='uid', how='inner')
 
 print("After merge:", len(data))
 
-# Keep FRONTAL images only (Indiana dataset uses 'Frontal')
+# Keep FRONTAL images only 
 data = data[data['projection'] == 'Frontal']
 
 print("After frontal filter:", len(data))
@@ -124,7 +124,6 @@ df.dropna(subset=['findings', 'impression', 'filename'], inplace=True)
 
 df['report_text'] = df['findings'] + " " + df['impression']
 
-# For demonstration, ensure binary labels exist based on 'normal' keyword
 df['label'] = df['Problems'].apply(
     lambda x: 0 if 'normal' in str(x).lower() else 1
 )
@@ -268,7 +267,7 @@ class MultimodalModel(nn.Module):
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 model = MultimodalModel().to(device)
 criterion = nn.CrossEntropyLoss()
-optimizer = torch.optim.AdamW(model.parameters(), lr=2e-5) # AdamW is better for Transformers
+optimizer = torch.optim.AdamW(model.parameters(), lr=2e-5) 
 
 # --- Training Loop ---
 epochs = 5
